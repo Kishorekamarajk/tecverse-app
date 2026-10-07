@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Network Security Config for TEC-VERSE 2026 Android APK.
+
+    Explicitly allows plain HTTP to:
+      - 10.184.48.20 (company server running Spring Boot API on port 2302)
+
+    HTTPS is allowed to all domains by default.
+    Cleartext to 10.0.2.2 is allowed for Android Emulator testing.
+-->
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <!-- Company server: Spring Boot API + PostgreSQL -->
+        <domain includeSubdomains="false">10.184.48.20</domain>
+        <!-- Android Emulator loopback to host machine -->
+        <domain includeSubdomains="false">10.0.2.2</domain>
+        <!-- ADB reverse tunnel (USB development) -->
+        <domain includeSubdomains="false">127.0.0.1</domain>
+        <domain includeSubdomains="false">localhost</domain>
+    </domain-config>
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system"/>
+        </trust-anchors>
+    </base-config>
+</network-security-config>
