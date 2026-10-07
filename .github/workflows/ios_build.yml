@@ -28,17 +28,11 @@ jobs:
       - name: 4. Install Flutter Packages
         run: flutter pub get
 
-      - name: 5. Install iOS CocoaPods Dependencies
-        run: |
-          cd ios
-          pod install --repo-update
-          cd ..
-
-      - name: 6. Build iOS Application (Release Mode, No Codesign)
+      - name: 5. Build iOS Application (Release Mode, No Codesign)
         run: |
           flutter build ios --release --no-codesign
 
-      - name: 7. Package Runner into Installable .ipa Payload
+      - name: 6. Package Runner into Installable .ipa Payload
         run: |
           mkdir -p build/ios/Payload
           cp -R build/ios/iphoneos/Runner.app build/ios/Payload/
@@ -46,7 +40,7 @@ jobs:
           zip -r tecverse_2026_ios.ipa Payload
           cd ../..
 
-      - name: 8. Upload iOS .ipa Artifact
+      - name: 7. Upload iOS .ipa Artifact
         uses: actions/upload-artifact@v4
         with:
           name: TEC-VERSE-2026-iOS-App
