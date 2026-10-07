@@ -59,12 +59,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>TEC-VERSE uses your microphone for voice commands and interactive venue assistance.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>TEC-VERSE uses speech recognition to navigate conference schedules and exhibition tracks.</string>
 </dict>
 </plist>

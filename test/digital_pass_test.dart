@@ -1,4 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/testing.dart';
 import 'package:tec_app/core/networking/api_client.dart';
 import 'package:tec_app/features/authentication/domain/authenticated_user.dart';
 import 'package:tec_app/features/digital_pass/data/digital_pass_repository_impl.dart';
@@ -24,7 +26,10 @@ void main() {
     );
 
     setUp(() {
-      apiClient = ApiClient();
+      final mockHttpClient = MockClient((request) async {
+        return http.Response('{"error": "not_found"}', 404);
+      });
+      apiClient = ApiClient(httpClient: mockHttpClient, baseUrl: 'http://localhost:2302/api');
       passRepository = DigitalPassRepositoryImpl(client: apiClient);
     });
 

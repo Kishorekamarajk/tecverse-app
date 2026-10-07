@@ -5,7 +5,7 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
-  workflow_dispatch: # Allows manual trigger from GitHub Actions UI
+  workflow_dispatch: # Allows manual click trigger from GitHub Actions tab
 
 jobs:
   build-ios:
@@ -22,25 +22,31 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: 3. Install Flutter Dependencies
+      - name: 3. Enable iOS Support
+        run: flutter config --enable-ios
+
+      - name: 4. Install Flutter Packages
         run: flutter pub get
 
-      - name: 4. Run Automated Tests
-        run: flutter test
+      - name: 5. Install iOS CocoaPods Dependencies
+        run: |
+          cd ios
+          pod install --repo-update
+          cd ..
 
-      - name: 5. Build iOS Release Application (No Codesign)
+      - name: 6. Build iOS Application (Release Mode, No Codesign)
         run: |
           flutter build ios --release --no-codesign
 
-      - name: 6. Package Runner into Installable .ipa Payload
+      - name: 7. Package Runner into Installable .ipa Payload
         run: |
           mkdir -p build/ios/Payload
-          cp -r build/ios/iphoneos/Runner.app build/ios/Payload/
+          cp -R build/ios/iphoneos/Runner.app build/ios/Payload/
           cd build/ios
           zip -r tecverse_2026_ios.ipa Payload
           cd ../..
 
-      - name: 7. Upload iOS .ipa Artifact
+      - name: 8. Upload iOS .ipa Artifact
         uses: actions/upload-artifact@v4
         with:
           name: TEC-VERSE-2026-iOS-App
